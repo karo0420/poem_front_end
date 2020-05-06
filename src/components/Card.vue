@@ -1,28 +1,22 @@
 <template>
-  <div class="mb-3">
-
-    <div class="bg-white rounded-lg max-w-lg shadow-sm">
-      <div>
+  <div class="mb-1">
+    <div @click="goToDetail(post.id)" class="bg-white max-w-lg shadow-sm"> <!-- rounded-lg -->
+    <!-- Writer -->
+      <UserInfo :user="post.user" class="z-10" />
+      <div class="-top-16 relative">
         <div class="h-56">
-          <img :src="post.avatar" class="h-56 w-full object-cover object-center rounded-t-lg">
+          <img :src="post.avatar" class="h-56 w-full object-cover object-center"> <!-- rounded-t-lg -->
         </div>
       </div>
+      <!-- Text -->
       <div class="p-3">
-        <h1 class="font-bold text-gray-900 text-lg text-center">{{ post.title }}</h1>
-        <p class="mt-1 text-gray-600">
-          {{ post.summary}}
+        <h1 class="font-bold text-gray-900 text-lg text-center">❛ {{ post.title }} ❜</h1>
+        <p v-html="isDetail?post.body:post.summary" class="mt-6 text-gray-600 text-sm leading-loose text-justify" dir="rtl">
+          
         </p>
-        <p class="mt-2 text-gray-400 text-xs text-right">{{ post.created_at }}</p>
+        <p class="mt-2 text-gray-400 text-xs text-right" dir="rtl">{{ post.created_at }} نوشته شده</p>
       </div>
-      <div class="flex p-3">
-        <div class="h-12 w-12 rounded-full">
-          <img src="@/assets/images/avatar1.jpg" class="h-12 w-full rounded-full object-cover object-top" alt="User avatar">
-        </div>
-        <div :class="{'mt-2': post.user.bio.length === 0}" class="ml-2">
-          <div>{{ post.user.nickname }}</div>
-          <div class="text-xs">{{ post.user.bio }}</div>
-        </div>
-      </div>
+      <!-- Categories -->
       <div class="flex-wrap p-3 pt-0">
         <a v-for="(category, index) in post.categories" :key="index" class="text-xs text-gray-500 bg-gray-300 p-1 rounded-md mr-1 mb-1 inline-block" href="#">
           {{ category.title }}
@@ -31,9 +25,10 @@
       <div class="px-3">
         <hr>
       </div>
+      <!-- Likes -->
       <div class="p-3">
         <div class="flex text-gray-800">
-          <div>
+          <div @click.stop.prevent="test">
             <i class="fas fa-thumbs-up"></i> <span class="text-xs">2500</span>
           </div>
           <div class="ml-6">
@@ -44,20 +39,42 @@
           </div>
         </div>
       </div>
+      <!-- Comments -->
+      <div class="p-3">
+        <slot></slot>
+      </div>
     </div>
-
   </div>
 </template>
 
 <script>
+  import UserInfo from '@/components/UserInfo.vue';
+  import Ax from '../services/Ax';
+
   export default {
     name: 'Card',
+    components: {
+      UserInfo
+    },
     props: {
       post: {
         type: Object,
         required: true
+      },
+      isDetail: {
+        type: Boolean,
+        default: false
       }
-    }
+    },
+    methods: {
+      goToDetail(id) {
+        if (!this.isDetail)
+          this.$router.push({ name: 'Detail', params: { id }});
+      },
+      test() {
+        
+      }
+    },
   }
 </script>
 

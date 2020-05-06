@@ -1,17 +1,23 @@
-import axios from 'axios';
-
-const remote = axios.create({
-  baseURL: 'http://localhost:8000/api'
-});
+import Ax from './Ax';
 
 export default {
   getAll() {
-    return remote.get('/posts')
+    return Ax.get('/posts')
       .then(res=> {
-        return res.data;
+        return res;
+      }).catch(err=> { console.log('Get all error')});
+  },
+  getById(id) {
+    return Ax.get('/posts/' + id)
+      .then(res=> {
+        return res;
+      }).catch(err=>{ console.log('Get by id')});
+  },
+  getComments(postId, page = 1) {
+    return Ax.get('/comments/' + postId + '?page=' + page)
+      .then(res=> {
+        return res;
       })
-      .catch(err=> {
-
-      })
+      .catch(err=> {})
   }
 }

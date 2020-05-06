@@ -1,1 +1,17 @@
 @import './tailwind.css';
+@import '~nprogress/nprogress.css';
+@import '~animate.css/animate.css';
+@import '~csshake/scss/csshake.scss';
+
+@font-face {
+  font-family: 'samim';
+  src: url('../fonts/Samim.woff2') format('woff2'),
+       url('../fonts/Samim.woff') format('woff'),
+       url('../fonts/Samim.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#app {
+  font-family: 'samim';
+}
