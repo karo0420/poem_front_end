@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const remote = axios.create({
   //baseURL: 'http://localhost:8000/api',
-  //baseURL: 'http://192.168.0.4/poem/public/api',
+    baseURL: 'http://192.168.0.4/poem/public/api',
   //baseURL: 'http://localhost:3000',
-  baseURL: 'http://api.soleimanian.com/api',
+  //baseURL: 'http://api.soleimanian.com/api',
   //timeout: 2000
 });
 

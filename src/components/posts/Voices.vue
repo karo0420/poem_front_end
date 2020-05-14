@@ -28,11 +28,12 @@
 
       </li>
     </ul>
-    <div class="text-center text-xs mt-6 shake-slow shake-constant" v-show="isLoading">
+    <div class="text-center text-xs mt-6 shake-slow shake-constant" v-if="isLoading">
       <span class="px-3 py-1 rounded bg-gray-100">
         درحال بارگذاری ، شکیبا باشید... 
       </span>
     </div>
+    <div class="text-center text-xs mt-6" v-else-if="current.voices.data.length == 0">هیچ موردی ثبت نشده است</div>
     <div class="text-center text-xs mt-6" v-show="showMoreVoiceBtn">
       <button @click="loadMore" class="px-3 py-1 rounded bg-gray-100">
         <span class="mx-2">نمایش آثار بیشتر</span>
