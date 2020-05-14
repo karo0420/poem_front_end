@@ -1,20 +1,23 @@
 <template>
   <div>
     <Card :post="post" :isDetail="true">
-      <Comments />
+      <template #comments><Comments /></template>
+      <template #voices><Voices /></template>
     </Card>
   </div>
 </template>
 
 <script>
-  import Card from '@/components/Card.vue';
-  import Comments from '@/components/Comments.vue';
+  import Card from '@/components/posts/Card.vue';
+  import Comments from '@/components/posts/Comments.vue';
+  import Voices from '@/components/posts/Voices.vue';
 
   export default {
     name: 'Detail',
     components: {
       Card,
-      Comments
+      Comments,
+      Voices
     },
     data() {
       return {

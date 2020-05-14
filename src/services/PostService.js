@@ -11,13 +11,18 @@ export default {
     return Ax.get('/posts/' + id)
       .then(res=> {
         return res;
-      }).catch(err=>{ console.log('Get by id')});
+      }).catch(err=> { console.log('Get by id error')});
   },
   getComments(postId, page = 1) {
     return Ax.get('/comments/' + postId + '?page=' + page)
       .then(res=> {
         return res;
-      })
-      .catch(err=> {})
+      }).catch(err=> { console.log('Get comments error')});
+  },
+  getVoices(postId, page = 1) {
+    return Ax.get('/voices/' + postId + '?page=' + page)
+      .then(res=> {
+        return res;
+      }).catch(err=> { console.log('Get voices error')});
   }
 }

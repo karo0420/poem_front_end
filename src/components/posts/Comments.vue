@@ -4,8 +4,11 @@
     <div v-for="(comment, index) in current.comments.data" :key="index" class="mt-5">
       <div class="font-bold">{{ comment.user.profile.nickname }}</div>
       <div class="text-xs -mt-1">{{ comment.user.profile.bio }}</div>
-      <div class="text-sm mr-6">{{ comment.body }}</div>
-      <div class="text-gray-400 text-xs text-left">{{ comment.created_at }} نوشته شده</div>
+      <div class="text-sm mr-6 mt-3">{{ comment.body }}</div>
+      <div class="text-gray-400 text-xs text-left mt-3">{{ comment.created_at }} نوشته شده</div>
+      <div class="py-3">
+        <hr>
+      </div>
     </div>
     <div class="text-center text-xs mt-6 shake-slow shake-constant" v-show="isLoading">
       <span class="px-3 py-1 rounded bg-gray-100">

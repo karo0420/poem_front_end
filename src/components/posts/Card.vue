@@ -16,6 +16,11 @@
         </p>
         <p class="mt-2 text-gray-400 text-xs text-right" dir="rtl">{{ post.created_at }} نوشته شده</p>
       </div>
+      <!-- Voices -->
+      <div class="p-3 my-5" dir="rtl" v-show="isDetail">
+        <div class="text-sm p-3 bg-gray-300 text-black rounded-t-md">به این اثر گوش کنید</div>
+        <slot name="voices"></slot>
+      </div>
       <!-- Categories -->
       <div class="flex-wrap p-3 pt-0">
         <a v-for="(category, index) in post.categories" :key="index" class="text-xs text-gray-500 bg-gray-300 p-1 rounded-md mr-1 mb-1 inline-block" href="#">
@@ -40,16 +45,13 @@
         </div>
       </div>
       <!-- Comments -->
-      <div class="p-3">
-        <slot></slot>
-      </div>
+      <div class="p-3 bg-gray-100" v-show="isDetail"><slot name="comments"></slot></div>
     </div>
   </div>
 </template>
 
 <script>
   import UserInfo from '@/components/UserInfo.vue';
-  import Ax from '../services/Ax';
 
   export default {
     name: 'Card',

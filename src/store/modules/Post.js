@@ -5,6 +5,11 @@ export const state = {
   posts: [],
   current: {
     post: {},
+    voices: {
+      data: [],
+      pages: {},
+      page: 0
+    },
     comments: {
       data: [],
       pages: {},
@@ -23,10 +28,16 @@ export const mutations = {
   FILL_CURRENT_COMMENTS: (state, comments) => {
     state.current.comments.data.push(...comments.data);
     state.current.comments.pages = comments.meta;
-    state.current.comments.page = comments.meta.current_page
+    state.current.comments.page = comments.meta.current_page;
   },
-  REMOVE_CURRENT_COMMENTS: (state) => {
+  REMOVE_CURRENTS: (state) => {
     state.current.comments = {data: [], pages: {}, page: 0};
+    state.current.voices   = {data: [], pages: {}, page: 0};
+  },
+  FILL_CURRENT_VOICES: (state, voices)=> {
+    state.current.voices.data.push(...voices.data);
+    state.current.voices.pages = voices.meta;
+    state.current.voices.page = voices.meta.current_page;
   }
 }
 
@@ -53,22 +64,35 @@ export const actions = {
     const post = getters.getById(id);
     if (post) {
       if (state.current.post.id != id)
-        commit('REMOVE_CURRENT_COMMENTS');
+        commit('REMOVE_CURRENTS');
       commit('FILL_CURRENT_POST', post);
       return post;
     }
   },
+  /*
   removeCurrentComments: ({ commit }) => {
     commit('REMOVE_CURRENT_COMMENTS');
   },
+  */
   getComments: ({ commit, state }, {postId, page}) => {
     const nextPage = page? page: state.current.comments.page + 1;
     const lastPage = state.current.comments.pages.last_page;
     if (lastPage == undefined || (nextPage <= lastPage)) {
       return PostService.getComments(postId, nextPage)
         .then(comments=> {
-          commit('FILL_CURRENT_COMMENTS', comments.data)
+          commit('FILL_CURRENT_COMMENTS', comments.data);
           return comments.data.data;
+        }).catch(err=> {throw err});
+    }
+  },
+  getVoices: ({ commit }, { postId, page }) => {
+    const nextPage = page? page: state.current.voices.page + 1;
+    const lastPage = state.current.voices.pages.last_page;
+    if (lastPage == undefined || (nextPage <= lastPage)) {
+      return PostService.getVoices(postId, nextPage)
+        .then(voices=> {
+          commit('FILL_CURRENT_VOICES', voices.data);
+          return voices.data.data;
         }).catch(err=> {throw err});
     }
   }

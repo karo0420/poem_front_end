@@ -41,7 +41,8 @@ Vue.use(VueRouter)
     component: ()=> import('@/views/posts/Detail'),
     beforeEnter: (to, from, next) => {
       to.meta.dependUrls = [
-        '/comments/'+ to.params.id
+        '/comments/'+ to.params.id,
+        '/voices/'+ to.params.id
       ];
       NProgress.start();
       Store.dispatch('post/setCurrent', to.params.id)

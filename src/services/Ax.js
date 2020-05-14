@@ -40,9 +40,12 @@ export default {
   },
   cancel(urls) {
     urls.forEach(url=> {
-      const req = requests.find(e=> e.url == url);
-      if (req)
-        req.source.cancel();
+      requests.forEach((e, index)=> {
+        if (e.url.search(url) >= 0) {
+          requests[index].source.cancel();
+          return;
+        }
+      })
     });
   },
   getRequests() {
