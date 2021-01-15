@@ -2,8 +2,8 @@
   <div class="mb-1">
     <div @click="goToDetail(post.id)" class="bg-white max-w-lg shadow-sm"> <!-- rounded-lg -->
     <!-- Writer -->
-      <UserInfo :user="post.user" class="z-10" />
-      <div class="-top-16 relative">
+      <UserInfo :user="post.user.profile" v-if="showUserInfo" class="z-10" @click.native.stop="goToProfile(post.user.id)" />
+      <div class="relative" :class="{'-top-16': showUserInfo}">
         <div class="h-56">
           <img :src="post.avatar" class="h-56 w-full object-cover object-center"> <!-- rounded-t-lg -->
         </div>
@@ -66,12 +66,19 @@
       isDetail: {
         type: Boolean,
         default: false
+      },
+      showUserInfo: {
+        type: Boolean,
+        default: true
       }
     },
     methods: {
       goToDetail(id) {
         if (!this.isDetail)
           this.$router.push({ name: 'Detail', params: { id }});
+      },
+      goToProfile(id) {
+        this.$router.push({ name: 'Profile', params: { id}});
       },
       test() {
         

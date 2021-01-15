@@ -71,6 +71,28 @@ Vue.use(VueRouter)
           next() // Lead to retry
         });
     }
+  },
+  {
+    path: '/profile/:id',
+    name: 'Profile',
+    props: true,
+    meta: {
+      dependUrls: []
+    },
+    component: () => import('@/views/users/Profile'),
+    beforeEnter: (to, from, next) => {
+      NProgress.start();
+      Store.dispatch('user/setCurrentProfile', to.params.id)
+        .then(user=> {
+          to.params.user = user;
+          NProgress.done();
+          next();
+        })
+        .catch(err=> {
+          console.log(err.message);
+          NProgress.done();
+        });
+    }
   }
 ]
 
